@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgba(83, 83, 85, 0.37); /* Cambio de color de fondo a gris claro */
+    color: #000; /* Cambio de color del texto a gris oscuro */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1d5b99; /* Cambio de color de fondo del encabezado */
+    padding: 10px;
+    text-align: center; /* Centra el texto */
+}
+
+h1 {
+    color: #fff; /* Cambio de color del título a blanco */
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(230, 230, 230, 0.384); /* Cambio de color de fondo del formulario a blanco */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc; /* Línea separadora entre etiqueta y campo */
+    padding-bottom: 5px; /* Espaciado inferior para la etiqueta */
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+input[type="file"] {
+    width: calc(100% - 12px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #13131379; /* Cambio de color del borde a gris claro */
+    border-radius: 5px;
+    background-color: #f8f8f8; /* Cambio de color de fondo del campo de entrada a blanco */
+}
+
+input[type="submit"] {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px; /* Aumenta el padding del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+textarea {
+    width: calc(100% - 18px); /* Ajuste del ancho del textarea */
+    max-width: calc(100% - 18px); /* Ajuste del ancho máximo del textarea */
+    height: 100px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    resize: none; /* Evita que el textarea sea redimensionable */
+}
+
+h3 {
+    color: #333; /* Cambio de color del título a gris oscuro */
+    margin-top: 20px;
+}
+
+/* Estilo para los campos de las plagas e información climática */
+#tipo_plaga,
+#descripcion_plaga,
+#ciudad_clima,
+#descripcion_clima,
+#descripcion_suelo,
+#latitud,
+#longitud {
+    width: calc(100% - 12px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+

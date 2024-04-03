@@ -1,0 +1,79 @@
+<?php
+// Verificar si se han enviado datos desde el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Conexión a la base de datos
+    $servername = "localhost";
+    $username = "root";
+    $password = "9@xYwHE@P&9DQ5bS"; // La contraseña de tu base de datos
+    $dbname = "prueba"; // Nombre de tu base de datos
+
+    // Crear conexión
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verificar conexión
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Preparar los datos para su inserción en la base de datos
+    $nombre = $_POST["nombre"];  
+    $nombre_cientifico = $_POST["nombre_cientifico"];
+    $ciudad = $_POST["ciudad"];
+    $direccion = $_POST["direccion"];
+    $zona_reserva = $_POST["zona_reserva"];
+    $ubicacion = $_POST["ubicacion"];
+    $jardin_botanico = $_POST["jardin_botanico"];
+    $superficie_decimal = $_POST["superficie_decimal"];
+    $inicio_flora = $_POST["inicio_flora"];
+    $fin_flora = $_POST["fin_flora"];
+    $tipo_cuidado = $_POST["tipo_cuidado"];
+    $informacion = $_POST["informacion"];
+
+    $nombre_plaga = $_POST["nombre_plaga"];
+    $tipo_plaga = $_POST["tipo_plaga"];
+    $descripcion_plaga = $_POST["descripcion_plaga"];
+
+    $ciudad_clima = $_POST["ciudad_clima"];
+    $descripcion_clima = $_POST["descripcion_clima"];
+    $temperatura_promedio = $_POST["temperatura_promedio"];
+    $humedad_promedio = $_POST["humedad_promedio"];
+    $descripcion_suelo = $_POST["descripcion_suelo"];
+  
+    $latitud = $_POST["latitud"];
+    $longitud = $_POST["longitud"];
+
+    $imagen_nombre = $_FILES["imagen"]["name"];
+    $imagen_temporal = $_FILES["imagen"]["tmp_name"];
+
+    // Mover la imagen a una ubicación permanente
+    $directorio_destino = "/home/yiro/uploads/"; // Directorio donde deseas almacenar las imágenes
+    $ruta_imagen = $directorio_destino . $imagen_nombre;
+    move_uploaded_file($imagen_temporal, $ruta_imagen);
+    // Insertar los datos en la tabla PLANTAS
+    // Insertar los datos en la tabla PLANTAS y la ruta de la imagen en la tabla IMAGEN
+    $sql = "INSERT INTO PLANTAS (Nombre, Nombre_cientifico) VALUES ('$nombre', '$nombre_cientifico')";
+   
+
+    if ($conn->query($sql) === TRUE) {
+       $id_planta = $conn->insert_id;
+
+      if ($conn->query($sql_insert_imagen) === TRUE) {
+            echo "Datos de planta e imagen insertados correctamente.";
+        } else {
+            echo "Error al insertar la imagen: " . $conn->error;
+        }
+      if ($conn->query($sqli) === TRUE) {
+            echo "Datos de planta e imagen insertados correctamente.";
+        } else {
+            echo "Error al insertar la imagen: " . $conn->error;
+        }
+    } else {
+       echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    // Cerrar la conexión a la base de datos
+    $conn->close();
+}
+?>
+
+

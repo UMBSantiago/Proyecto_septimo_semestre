@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="stylesadd.css" />
+<title>Formulario de Plantas</title>
+</head>
+<body>
+  <h2>Formulario de Plantas</h2>
+  <form action="addplanta.php" method="POST" enctype="multipart/form-data">
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br><br>
+
+    <label for="nombre_cientifico">Nombre Científico:</label><br>
+    <input type="text" id="nombre_cientifico" name="nombre_cientifico" required><br><br>
+
+    <label for="reino">Reino:</label><br>
+    <input type="text" id="reino" name="reino" required><br><br>
+
+    <label for="division">División:</label><br>
+    <input type="text" id="division" name="division" required><br><br>
+
+    <label for="SubDivision">Subdivisión:</label><br>
+    <input type="text" id="SubDivision" name="SubDivision" required><br><br>
+
+    <label for="clase">Clase:</label><br>
+    <input type="text" id="clase" name="clase" required><br><br>
+
+    <label for="SubClase">Subclase:</label><br>
+    <input type="text" id="SubClase" name="SubClase" required><br><br>
+
+    <label for="orden">Orden:</label><br>
+    <input type="text" id="orden" name="orden" required><br><br>
+
+    <label for="familia">Familia:</label><br>
+    <input type="text" id="familia" name="familia" required><br><br>
+
+    <label for="genero">Género:</label><br>
+    <input type="text" id="genero" name="genero" required><br><br>
+
+    <label for="especie">Especie:</label><br>
+    <input type="text" id="especie" name="especie" required><br><br>
+
+    <label for="ciudad">Ciudad:</label><br>
+    <input type="text" id="ciudad" name="ciudad" required><br><br>
+
+    <label for="direccion">Dirección:</label><br>
+    <input type="text" id="direccion" name="direccion" required><br><br>
+
+    <label for="zona_reserva">Nombre de la Zona de Reserva:</label><br>
+    <input type="text" id="zona_reserva" name="zona_reserva" required><br><br>
+
+    <label for="ubicacion">Ubicación:</label><br>
+    <input type="text" id="ubicacion" name="ubicacion" required><br><br>
+
+    <label for="jardin_botanico">Nombre del Jardín Botánico:</label><br>
+    <input type="text" id="jardin_botanico" name="jardin_botanico" required><br><br>
+
+    <label for="superficie_decimal">Superficie Decimal:</label><br>
+    <input type="number" id="superficie_decimal" name="superficie_decimal" required><br><br>
+
+    <label for="inicio_flora">Inicio de la Flora:</label><br>
+    <input type="text" id="inicio_flora" name="inicio_flora" required><br><br>
+
+    <label for="fin_flora">Fin de la Flora:</label><br>
+    <input type="text" id="fin_flora" name="fin_flora" required><br><br>
+
+    <label for="tipo_cuidado">Tipo de Cuidado:</label><br>
+    <input type="text" id="tipo_cuidado" name="tipo_cuidado" required><br><br>
+
+    <label for="informacion">Recomendaciones de cuidado:</label><br>
+    <textarea id="informacion" name="informacion" required></textarea><br><br>
+
+    <h3>Plagas</h3>
+
+    <label for="tipo_plaga">Tipo de Plaga:</label><br>
+    <input type="text" id="tipo_plaga" name="tipo_plaga"><br><br>
+
+    <label for="descripcion_plaga">Descripción de la Plaga:</label><br>
+    <textarea id="descripcion_plaga" name="descripcion_plaga"></textarea><br><br>
+
+    <h3>Información Climática</h3>
+
+    <label for="ciudad_clima">Ciudad:</label><br>
+    <input type="text" id="ciudad_clima" name="ciudad_clima" required><br><br>
+
+    <label for="descripcion_clima">Descripción del Clima:</label><br>
+    <textarea id="descripcion_clima" name="descripcion_clima" required></textarea><br><br>
+
+    <label for="temperatura_promedio">Temperatura Promedio:</label><br>
+    <input type="number" id="temperatura_promedio" name="temperatura_promedio" required><br><br>
+
+    <label for="humedad_promedio">Humedad Promedio:</label><br>
+    <input type="number" id="humedad_promedio" name="humedad_promedio" required><br><br>
+
+    <label for="descripcion_suelo">Descripción del Suelo:</label><br>
+    <textarea id="descripcion_suelo" name="descripcion_suelo" required></textarea><br><br>
+
+    <label for="latitud">Latitud:</label><br>
+    <input type="text" id="latitud" name="latitud" required><br><br>
+
+    <label for="longitud">Longitud:</label><br>
+    <input type="text" id="longitud" name="longitud" required><br><br>
+
+    <label for="imagen">Subir Imagen:</label><br>
+    <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
+
+    <input type="submit" value="Enviar">
+  </form>
+</body>
+</html>
+

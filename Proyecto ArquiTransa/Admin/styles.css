@@ -1,0 +1,129 @@
+/* Estilos para el encabezado */
+header {
+    display: block;
+    background-color: #1d5b99;
+    padding: 10px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#titulo {
+    color: #fff;
+    margin: 0;
+    text-decoration: none;
+}
+
+#titulo:hover {
+    background-color: transparent;
+}
+
+/* Estilos para el contenedor de bÃºsqueda */
+.buscar {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Estilos para la barra de bÃºsqueda */
+.busqueda {
+    padding: 5px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    width: calc(100% - 140px); /* Calcula el ancho de la barra de bÃºsqueda para que el botÃ³n tenga espacio al lado */
+    margin-right: 10px;
+}
+
+/* Estilos para el botÃ³n de bÃºsqueda */
+.search {
+    position: absolute;
+    right: 10px;
+    padding: 10px 15px;
+    background-color: #1d5b99;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search:hover {
+    background-color: #357ebd;
+}
+
+/* Estilos para el pie de pÃ¡gina */
+footer {
+    background-color: #1d5b99;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 20px);
+}
+
+/* Estilos para los botones del pie de pÃ¡gina */
+footer button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 80px;
+}
+
+footer button i {
+    color: #fff;
+    font-size: 24px;
+}
+
+footer button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Estilos generales */
+body {
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+}
+
+#plantasContainer {
+    list-style-type: none;
+    padding: 0;
+}
+
+#plantasContainer li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+    border-left: 6px solid #007bff;
+    border-radius: 5px;
+}
+
+.planta.seleccionada {
+    background-color: lightblue;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el botÃ³n de cerrar sesiÃ³n */
+.cerrar-sesion {
+    padding: 8px 16px;
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    float: right;
+}
+
+.cerrar-sesion:hover {
+    background-color: #cc4b37;
+}
+
+

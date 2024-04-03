@@ -1,0 +1,33 @@
+  GNU nano 5.4                  mapa_bogota.js *
+
+    var xhrTaxonomia = new XMLHttpRequest();
+    xhrTaxonomia.open('GET', 'obtener_planta.php?id=' + pin, true);
+    xhrTaxonomia.onload = function () {
+        if (xhrTaxonomia.status >= 200 && xhrTaxonomia.status < 300) {
+            var plantaData = JSON.parse(xhrTaxonomia.responseText);
+            var propiedades = ["Reino", "División", "Clase", "Orden", "F>
+            var lista = document.createElement("ul");
+            propiedades.forEach(function(propiedad) {
+                var li = document.createElement("li");
+                // Convertir la primera letra de la propiedad a minúscul>
+                var propiedadMin = propiedad.charAt(0).toLowerCase() + p>
+                // Verificar si la propiedad existe en plantaData
+                if (plantaData[propiedadMin] !== undefined) {
+                    li.textContent = `${propiedad}: ${plantaData[propied>
+                } else {
+                    li.textContent = `${propiedad}: No disponible`;
+                }
+                lista.appendChild(li);
+            });
+            contenidoTaxonomia.appendChild(lista); // Agregar la lista a>
+            // Mostrar el cuadro después de cargar los datos
+            var cuadro = document.getElementById("cuadro");
+            cuadro.style.left = "0";
+        } else {
+            console.error('Error al obtener la información de la taxonom>
+            contenidoTaxonomia.textContent = 'Error al cargar la informa>
+        }
+    };
+    xhrTaxonomia.send();
+}
+
