@@ -2,7 +2,7 @@
 // Conexión a la base de datos
 $servername = "localhost";
 $username = "root";
-$password = "9@xYwHE@P&9DQ5bS";
+$password = "";
 $dbname = "prueba";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -11,6 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
+
 
 // Consulta para obtener las plantas
 $sql = "SELECT * FROM PLANTAS";

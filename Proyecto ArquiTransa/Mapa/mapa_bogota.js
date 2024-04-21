@@ -88,10 +88,11 @@ function cargarInformacionTaxonomia(pin) {
     var xhrTaxonomia = new XMLHttpRequest();
     xhrTaxonomia.open('GET', 'obtener_planta.php?id=' + (pin.ID_Pin), true);
     console.log(pin);
+    console.log(pin.ID_Pin);
     xhrTaxonomia.onload = function () {
         if (xhrTaxonomia.status >= 200 && xhrTaxonomia.status < 300) {
             var plantaData = JSON.parse(xhrTaxonomia.responseText);
-            var propiedades = [pin.direccion,"Nombre", "Reino", "Division", "Subdivision", "Clase", "Subclase", "Orden", "Familia", "Genero", "Especie"];
+            var propiedades = ["Nombre", "Reino", "Division", "Subdivision", "Clase", "Subclase", "Orden", "Familia", "Genero", "Especie"];
             console.log(plantaData);
             var lista = document.createElement("ul");
             propiedades.forEach(function (propiedad) {
@@ -106,7 +107,16 @@ function cargarInformacionTaxonomia(pin) {
                 }
                 lista.appendChild(li);
             });
+            // Crear elemento de imagen
+            var imagen = document.createElement("img");
+            imagen.src = plantaData.direccion; // Asignar la dirección de la imagen
+            imagen.alt = "Imagen de la planta"; // Texto alternativo para la imagen
+            contenidoTaxonomia.appendChild(imagen); // Agregar la imagen al contenido de la taxonomía
+            
             contenidoTaxonomia.appendChild(lista); // Agregar la lista al contenido de la taxonomía
+            
+            
+            
             // Mostrar el cuadro después de cargar los datos
             var cuadro = document.getElementById("cuadro");
             cuadro.style.left = "0";
@@ -117,5 +127,6 @@ function cargarInformacionTaxonomia(pin) {
     };
     xhrTaxonomia.send();
 }
+
 
 

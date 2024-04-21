@@ -1,4 +1,3 @@
-
 <?php
 // Lineas para la depuración
 ini_set('display_errors', 1);
@@ -10,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conexión a la base de datos
     $servername = "localhost";
     $username = "root";
-    $password = "9@xYwHE@P&9DQ5bS"; // La contraseña de tu base de datos
+    $password = ""; // La contraseña de tu base de datos
     $dbname = "prueba"; // Nombre de tu base de datos
 
     // Crear conexión
@@ -21,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    $conn->begin_transaction();
+
+    try {
     // Preparar los datos para su inserción en la base de datos
     $nombre = $_POST["nombre"];
     $nombre_cientifico = $_POST["nombre_cientifico"];
@@ -63,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mover la imagen a una ubicación permanente
     $imagen_nombre = $_FILES["imagen"]["name"];
     $imagen_temporal = $_FILES["imagen"]["tmp_name"];
-    $directorio_destino = "/home/yiro/uploads/"; // Cambiar a tu directorio destino
+    $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
     $ruta_imagen = $directorio_destino . $imagen_nombre;
 
     // Mover la imagen al directorio de destino
@@ -131,15 +133,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mover la imagen a una ubicación permanente
         $imagen_nombre = $_FILES["imagen"]["name"];
         $imagen_temporal = $_FILES["imagen"]["tmp_name"];
-        $directorio_destino = "/home/yiro/uploads/"; // Cambiar a tu directorio destino
+        $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
         $ruta_imagen = $directorio_destino . $imagen_nombre;
     
-	
+        $conn->commit();
+
+        echo json_encode(array('success' => 'Los datos de la planta y sus relacionados han sido eliminados exitosamente.'));
+        } catch (Exception $e) {
+        // Revertir la transacción en caso de error
+        $conn->rollback();
+        echo json_encode(array('error' => 'Error al insertar la planta: ' . $e->getMessage()));
+        }
     
         // Cerrar conexión
         $conn->close();
 
-// Redireccionar a Admin.html
+    // Redireccionar a Admin.html
     header("Location: Admin.html");
     exit;
     }

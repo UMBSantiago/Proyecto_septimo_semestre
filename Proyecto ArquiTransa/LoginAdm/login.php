@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Usuario es investigador
             $_SESSION['correoUsuario'] = $email;
             setcookie("email", $email, time() + 31536000, "/");
-            header("Location: ../Admin/investigador.html"); // Redirigir al panel de investigador
+            header("Location: ../Investigador/investigador.html"); // Redirigir al panel de investigador
             exit();
         } else {
             // DNI incorrecto, muestra un mensaje de error específico

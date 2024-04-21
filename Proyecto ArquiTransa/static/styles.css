@@ -1,0 +1,486 @@
+
+:root {
+    --color-primary: #1d5b99;
+    --color-secondary: #fff;
+    --color-hover: #357ebd;
+    --color-error: #ff6347;
+    --color-error-dark: #cc4b37;
+}
+
+.barra-sup {
+    top: 0;
+    left: 0;
+    width: calc(100% - 20px);
+    background-color: var(--color-primary);
+    padding: 10px 30px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    transition: 0.7s;
+    position: fixed;
+    justify-content: space-around;
+    z-index: 10;
+}
+
+/*------------------------------------*/
+/*Mapa*/
+/* Estilo del cuerpo de la página */
+.mapa-b {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+/* Estilo del contenedor del mapa */
+#map {
+    height: calc(95vh - 50px); /* Ajusta la altura del mapa para dejar espacio para el título */
+}
+/* Estilo del título */
+.barra-map{
+    display: block; /* Hace que el enlace se comporte como un bloque */
+    background-color: #1d5b99; /* Cambia el color de fondo */
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+#cuadro {
+    position: fixed;
+    top: 0;
+    left: -35%; /* Inicialmente fuera de la pantalla */
+    width: 40%; /* Ancho del cuadro */
+    max-width: 300px; /* Ancho máximo del cuadro */
+    height: 100%; /* Altura automática según el contenido */
+    background-color: #f0f0f0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+    z-index: 999; /* Asegura que el cuadro esté sobre otros elementos */
+    padding: 20px;
+    overflow: hidden; /* Oculta el desbordamiento */
+    transition: left 0.3s ease; /* Agregamos transición para el movimiento */
+}
+
+#cuadro img {
+    max-width: 100%; /* La imagen no puede ser más grande que el cuadro */
+    height: auto; /* Altura automática según el ancho */
+    display: block; /* Evita el espacio adicional debajo de la imagen */
+    margin-bottom: 20px; /* Espacio entre la imagen y el contenido */
+}
+
+
+/* Modificaciones para el control de zoom */
+.leaflet-control-zoom.leaflet-control.leaflet-bar {
+    position: absolute;
+    top: 20px; /* Ajusta la distancia desde la parte superior de la pantalla */
+    right: 20px; /* Ajusta la distancia desde el borde derecho de la pantalla */
+    z-index: inherit; /* Establece el z-index al nivel del mapa */
+
+}
+
+
+div.leaflet-popup-content-wrapper {
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    background-color: #fff;
+    width: 200px;
+    max-width: 300px; /* Ancho máximo del pop-up */
+}
+
+div.leaflet-popup-content-wrapper *  {
+    margin: 0;
+}
+
+
+.leaflet-popup-content-wrapper .popup-image {
+    width: 150%;
+    border-radius: 4px 4px 0 0; /* Bordes redondeados solo en la parte superior */
+}
+
+.leaflet-popup-content-wrapper h3,
+.leaflet-popup-content-wrapper h3.nom,
+.leaflet-popup-content-wrapper h3.ubi {
+    padding: 12px;
+    margin: 0;
+    color: #fff;
+}
+
+.leaflet-popup-content-wrapper h3.nom {
+    background-color: #6989a8;
+    font-size: 16px;
+}
+
+.leaflet-popup-content-wrapper h3.ubi {
+    background-color: #2965a0;
+    font-size: 12px;
+}
+div.leaflet-popup-tip{
+   background-color: #2965a0; 
+}
+
+/*------------------------------------*/
+
+.buscar{
+    display: flex;   
+
+}
+
+.titulo {
+    color: var(--color-secondary);
+    margin: 0;
+    text-decoration: none;
+}
+
+.titulo:hover {
+    background-color: transparent;
+
+}
+
+.back {
+    
+    padding: 8px 16px;
+    background-color: var(--color-error);
+    color: var(--color-secondary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+}
+.back .regre {
+    color: var(--color-secondary);
+    margin: 0;
+    text-decoration: none;
+}
+
+.back:hover {
+    background-color: var(--color-error-dark);
+   
+}
+
+.buscar {
+    margin: 10;
+    max-width: 310px;
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+.buscar input {
+    border: none; /* Elimina el borde */
+    outline: none; /* Elimina el borde de enfoque */
+    background-color: transparent; /* Hace el input transparente */
+    color: var(--color-secondary); /* Color del texto */
+    font-size: 1rem; /* Tamaño de fuente */
+    -webkit-appearance: none; /* Desactiva el estilo de autocompletado del navegador */
+    -moz-appearance: none;
+    appearance: none;
+}
+.buscar input::placeholder {
+    color: rgba(255, 255, 255, 0.5); /* Color del marcador de posición */
+}
+
+/* Desactiva el autocompletado del navegador */
+.buscar input:-webkit-autofill,
+.buscar input:-webkit-autofill:hover,
+.buscar input:-webkit-autofill:focus,
+.buscar input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    
+}
+.buscar input:-webkit-autofill {
+    -webkit-text-fill-color: #fff !important;
+}
+
+
+.search {
+    margin-left: 1px;
+    padding: 10px 15px;
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.search:hover {
+    background-color: var(--color-hover);
+}
+
+.cerrar-sesion {
+    
+    padding: 8px 16px;
+    background-color: var(--color-error);
+    color: var(--color-secondary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+}
+
+.cerrar-sesion:hover {
+    background-color: var(--color-error-dark);
+   
+}
+
+
+.barra-inf {
+    background-color: #1d5b99;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 20px);
+}
+
+
+.barra-inf .Addplanta,.editar,.eliminar,.mapita{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 80px;
+}
+
+.barra-inf .Addplanta i ,.editar i,.eliminar i,.mapita i{
+    color: #fff;
+    font-size: 24px;
+}
+
+.barra-inf .Addplanta:hover,.editar:hover,.eliminar:hover,.mapita:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.Adm {
+   
+    margin: 0;
+    padding: 0;
+}
+
+/*------------------------------------*/
+/*Numerador de los text area*/
+span{
+    color: var(--color-error);
+}
+/*------------------------------------*/
+
+
+/*------------------------------------*/
+/*formulario*/
+
+.addp, .editp {
+    font-family: Arial, sans-serif;
+    background-color: rgba(83, 83, 165, 0.37); /* Cambio de color de fondo a gris claro */
+    margin: 0;  
+    padding: 0;
+}
+
+.tit-form {
+    color: var(--color-secondary);
+    margin-top: 60px; /* Cambio de color del título a blanco */
+    text-align: center;
+}
+
+.subt-form {
+    color: #333; /* Cambio de color del título a gris oscuro */
+    margin-top: 20px;
+}
+
+.formulario {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(230, 230, 230, 0.384); /* Cambio de color de fondo del formulario a blanco */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    border-bottom: 2px solid var(--color-secondary);
+    
+}
+
+.formulario label {
+    position: absolute;
+    transform: translateY(-1%);
+    color: #000;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.5s ease-in-out;
+}
+
+#nombre,#nombre_cientifico,#reino,#division,#SubDivision,
+#clase,#SubClase,#orden,#familia,#genero,#especie,
+#ciudad,#direccion,#zona_reserva,#ubicacion,#jardin_botanico,
+#superficie_decimal,#inicio_flora,#fin_flora,#tipo_cuidado,
+#tipo_plaga,#ciudad_clima,#temperatura_promedio,#humedad_promedio,
+#latitud,#longitud,#imagen
+{
+    width: 97%;
+    padding: 8px;
+    border: none; /* Elimina el borde */
+    outline: none; /* Elimina el borde de enfoque */
+    background-color: transparent; /* Hace el input transparente */
+    color: #000; /* Color del texto */
+    font-size: 1rem; /* Tamaño de fuente */
+    -webkit-appearance: none; /* Desactiva el estilo de autocompletado del navegador */
+    -moz-appearance: none;
+    appearance: none;
+    border-bottom: 3px solid var(--color-primary);
+}
+
+#informacion,#descripcion_plaga,#descripcion_clima,#descripcion_suelo#descripcion_suelo{
+    width: calc(100% - 18px); /* Ajuste del ancho del textarea */
+    max-width: calc(100% - 18px); /* Ajuste del ancho máximo del textarea */
+    border: none; /* Elimina el borde */
+    outline: none; /* Elimina el borde de enfoque */
+    background-color: rgba(230, 230, 230, 0.329); /* Hace el input transparente */
+    color: #000; /* Color del texto */
+    font-size: 1rem; /* Tamaño de fuente */
+    -webkit-appearance: none; /* Desactiva el estilo de autocompletado del navegador */
+    -moz-appearance: none;
+    appearance: none;
+    border-top: 3px solid var(--color-primary);
+    border-bottom: 3px solid var(--color-primary);
+    resize: none;
+    height: 100px;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.enviar {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px; /* Aumenta el padding del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enviar:hover {
+    background-color: #0056b3;
+}
+/*------------------------------------*/
+
+/*------------------------------------*/
+/*lista plantas admin*/
+
+main{
+    overflow-y: auto;
+    margin-top: 50px;
+}
+
+.plantaslist {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 70px;
+}
+
+.plantaslist li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f4f4f4;
+    border: 2px solid #cccbcb;
+    border-left: 6px solid #007bff;
+    border-radius: 5px;
+}
+
+.planta.seleccionada {
+    background-color: rgb(214, 233, 240);
+    /* Cambia el color de fondo */
+    border-radius: 5px;
+    /* Agrega esquinas redondeadas */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    /* Agrega una sombra */
+}
+/*------------------------------------*/
+
+
+@media only screen and (max-width: 1024px) {
+    .barra-sup {
+        padding: 10px 10px; /* Reducir el padding */
+        font-size: 18px; /* Reducir el tamaño de fuente */
+    }
+
+    .mapa-b {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        padding: 0;
+    }
+
+    #map {
+        height: calc(95vh - 40px); /* Ajustar la altura del mapa */
+    }
+
+    .barra-map {
+        font-size: 20px; /* Reducir el tamaño de fuente del título del mapa */
+    }
+
+    #cuadro {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Inicialmente fuera de la pantalla */
+        width: 45%; /* Ancho del cuadro */
+        max-width: 200px; /* Ancho máximo del cuadro */
+        height: 100%; /* Altura automática según el contenido */
+        background-color: #f0f0f0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+        z-index: 999; /* Asegura que el cuadro esté sobre otros elementos */
+        padding: 20px;
+        overflow: hidden; /* Oculta el desbordamiento */
+        transition: left 0.3s ease; /* Agregamos transición para el movimiento */
+    }
+    
+    #cuadro img {
+        max-width: 100%; /* La imagen no puede ser más grande que el cuadro */
+        height: auto; /* Altura automática según el ancho */
+        display: block; /* Evita el espacio adicional debajo de la imagen */
+        margin-bottom: 20px; /* Espacio entre la imagen y el contenido */
+    }
+    .titulo{
+        font-size: 0.9rem;
+    }
+
+    .buscar {
+        margin: 10px;
+        max-width: 300px;
+    }
+
+    .buscar input {
+        width: 80%; /* Ajustar el ancho del input */
+    }
+
+    .enviar {
+        width: 100%; /* Ajustar el ancho del botón */
+    }
+
+    .barra-inf {
+        padding: 5px 10px; /* Ajustar el padding */
+    }
+
+    .barra-inf .Addplanta,
+    .editar,
+    .eliminar,
+    .mapita {
+        margin: 0 20px; /* Ajustar el margen */
+    }
+
+    .barra-inf .Addplanta i,
+    .editar i,
+    .eliminar i,
+    .mapita i {
+        font-size: 20px; /* Reducir el tamaño del icono */
+    }
+    main{
+        overflow-y: auto;
+        margin-top: 70px;
+    }
+}
