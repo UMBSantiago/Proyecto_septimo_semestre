@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Conexión a la base de datos
     $servername = "localhost";
     $username = "root";
-    $password = ""; // La contraseña de tu base de datos
+    $password = "9@xYwHE@P&9DQ5bS"; // La contraseña de tu base de datos
     $dbname = "prueba"; // Nombre de tu base de datos
 
     // Crear conexión
@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->begin_transaction();
 
     try {
+
     // Preparar los datos para su inserción en la base de datos
     $nombre = $_POST["nombre"];
     $nombre_cientifico = $_POST["nombre_cientifico"];
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagen_nombre = $_FILES["imagen"]["name"];
     $imagen_temporal = $_FILES["imagen"]["tmp_name"];
     $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
-    $ruta_imagen = $directorio_destino . $imagen_nombre;
+    $ruta_imagen = $directorio_destino.$imagen_nombre;
 
     // Mover la imagen al directorio de destino
     if (move_uploaded_file($imagen_temporal, $ruta_imagen)) {
@@ -134,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imagen_nombre = $_FILES["imagen"]["name"];
         $imagen_temporal = $_FILES["imagen"]["tmp_name"];
         $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
-        $ruta_imagen = $directorio_destino . $imagen_nombre;
+        $ruta_imagen = $directorio_destino.$imagen_nombre;
     
         $conn->commit();
 
@@ -148,8 +149,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Cerrar conexión
         $conn->close();
 
-    // Redireccionar a Admin.html
-    header("Location: Admin.html");
-    exit;
+// Redireccionar a Admin.html
+     header("Location: Admin.html");
+      exit;
     }
     ?>
+

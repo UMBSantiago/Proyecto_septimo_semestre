@@ -142,7 +142,7 @@ if (!empty($_FILES["imagen"]["name"])) {
     $imagen_nombre = $_FILES["imagen"]["name"];
         $imagen_temporal = $_FILES["imagen"]["tmp_name"];
         $directorio_destino = "../Admin/imagen/"; // Ruta relativa al directorio raíz del servidor
-        $ruta_imagen = $directorio_destino . $imagen_nombre;
+        $ruta_imagen = $directorio_destino.$imagen_nombre;
 
 
     // Mover la imagen al directorio de destino
@@ -179,4 +179,5 @@ if (!empty($_FILES["imagen"]["name"])) {
     exit; 
 }
 ?>
+
 

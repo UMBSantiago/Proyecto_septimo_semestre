@@ -108,26 +108,47 @@
 
     <label for="latitud">Latitud:</label><br>
     <input type="text" id="latitud" name="latitud" class="limitedcin" required><br><br>
-
     <label for="longitud">Longitud:</label><br>
     <input type="text" id="longitud" name="longitud" class="limitedcin" required><br><br>
 
     <label for="imagen">Subir Imagen:</label><br>
     <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
-    
+
     <input type="hidden" name="id_planta" id="id_planta">
-    <button class="enviar" type="submit" value="Enviar">Enviar</button>
+    <button class="enviar" type="submit" value="Enviar" onclick="return confirmarEdicion();">Enviar
 
 
   </form>
 
+  </form>
+
 <script>
-function validarASCII(input) {
-    var regex = /^[ -~]*$/; // Esta expresión regular acepta solo caracteres ASCII imprimibles
+   function confirmarEdicion() {
+    // Mostrar un cuadro de diálogo de confirmación al usuario
+    var confirmacion = confirm("¿Estás seguro de editar esta planta?");
+    
+    // Si el usuario confirma, devuelve true y se envía el formulario
+    // Si el usuario cancela, devuelve false y el envío del formulario se cancela
+    return confirmacion;
+  }
+
+  // Asignar la función confirmarEdicion() al evento submit del formulario
+  window.onload = function() {
+    var editForm = document.getElementById('editForm');
+    if (editForm) {
+      editForm.onsubmit = function() {
+        console.log("Evento submit del formulario activado");
+        return confirmarEdicion();
+      };
+    }
+  };
+function validarUTF8(input) {
+    var regex = /^[ -~áéíóúÁÉÍÓÚüÜ,.ñÑ]*$/; // Esta expresión regular acepta caracteres ASCII imprimibles, letras con tilde, coma, punto, la letra ñ y caracteres UTF-8 adicionales
     if (!regex.test(input.value)) {
-        input.value = input.value.replace(/[^\x20-\x7E]/g, ''); // Elimina caracteres no ASCII
+        input.value = input.value.replace(/[^\x20-\x7EáéíóúÁÉÍÓÚüÜ,.ñÑ]/g, ''); // Elimina caracteres no permitidos
     }
 }
+
 
   document.addEventListener('DOMContentLoaded', function() {
     var descripciones = document.querySelectorAll('textarea.limited');
@@ -238,3 +259,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
