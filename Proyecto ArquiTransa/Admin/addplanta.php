@@ -1,4 +1,3 @@
-
 <?php
 // Lineas para la depuración
 ini_set('display_errors', 1);
@@ -20,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+
+    $conn->begin_transaction();
+
+    try {
 
     // Preparar los datos para su inserción en la base de datos
     $nombre = $_POST["nombre"];
@@ -63,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mover la imagen a una ubicación permanente
     $imagen_nombre = $_FILES["imagen"]["name"];
     $imagen_temporal = $_FILES["imagen"]["tmp_name"];
-    $directorio_destino = "/home/yiro/uploads/"; // Cambiar a tu directorio destino
-    $ruta_imagen = $directorio_destino . $imagen_nombre;
+    $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
+    $ruta_imagen = $directorio_destino.$imagen_nombre;
 
     // Mover la imagen al directorio de destino
     if (move_uploaded_file($imagen_temporal, $ruta_imagen)) {
@@ -131,16 +134,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mover la imagen a una ubicación permanente
         $imagen_nombre = $_FILES["imagen"]["name"];
         $imagen_temporal = $_FILES["imagen"]["tmp_name"];
-        $directorio_destino = "/home/yiro/uploads/"; // Cambiar a tu directorio destino
-        $ruta_imagen = $directorio_destino . $imagen_nombre;
+        $directorio_destino = "../Admin/imagen/"; // Cambiar a tu directorio destino
+        $ruta_imagen = $directorio_destino.$imagen_nombre;
     
-	
+        $conn->commit();
+
+        echo json_encode(array('success' => 'Los datos de la planta y sus relacionados han sido eliminados exitosamente.'));
+        } catch (Exception $e) {
+        // Revertir la transacción en caso de error
+        $conn->rollback();
+        echo json_encode(array('error' => 'Error al insertar la planta: ' . $e->getMessage()));
+        }
     
         // Cerrar conexión
         $conn->close();
 
 // Redireccionar a Admin.html
-    header("Location: Admin.html");
-    exit;
+     header("Location: Admin.html");
+      exit;
     }
     ?>
+

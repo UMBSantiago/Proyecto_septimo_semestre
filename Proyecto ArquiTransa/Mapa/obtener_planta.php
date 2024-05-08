@@ -17,7 +17,11 @@ if ($conn->connect_error) {
 $id = intval($_GET['id']);
 
 // Consulta preparada para obtener la información de la planta
-$sql = "SELECT * FROM TAXONOMIA WHERE ID_Taxo = ?";
+$sql = "SELECT TAXONOMIA.*, IMAGEN.direccion
+FROM TAXONOMIA
+JOIN IMAGEN ON TAXONOMIA.ID_Taxo = IMAGEN.FKID_Planta
+WHERE TAXONOMIA.ID_Taxo = ?";
+;
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i",$id); // "i" indica que el parámetro es un entero
 

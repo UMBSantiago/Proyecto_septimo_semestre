@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,30 +8,6 @@
 <title>Formulario de Plantas</title>
 
 <script>
-
-
-
-  function confirmarinsertar() {
-    // Mostrar un cuadro de diálogo de confirmación al usuario
-    var confirmacion = confirm("¿Estás seguro de insertar esta planta?");
-
-    // Si el usuario confirma, devuelve true y se envía el formulario
-    // Si el usuario cancela, devuelve false y el envío del formulario se cancela
-    return confirmacion;
-  }
-
-  // Asignar la función confirmarEdicion() al evento submit del formulario
-  window.onload = function() {
-    var insertForm = document.getElementById('insertForm');
-    if (insertForm) {
-      insertForm.onsubmit = function() {
-        console.log("Evento submit del formulario activado");
-        return confirmarinsertar();
-      };
-    }
-  };
-
-
   window.onload = function() {
     var descripciones = document.querySelectorAll('textarea.limited');
     
@@ -64,10 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-function validarUTF8(input) {
-    var regex = /^[ -~áéíóúÁÉÍÓÚüÜ,.ñÑ]*$/; // Esta expresión regular acepta caracteres ASCII imprimibles, letras con tilde, coma, punto, la letra ñ y caracteres UTF-8 adicionales
+
+function validarASCII(input) {
+    var regex = /^[ -~]*$/; // Esta expresión regular acepta solo caracteres ASCII imprimibles
     if (!regex.test(input.value)) {
-        input.value = input.value.replace(/[^\x20-\x7EáéíóúÁÉÍÓÚüÜ,.ñÑ]/g, ''); // Elimina caracteres no permitidos
+        input.value = input.value.replace(/[^\x20-\x7E]/g, ''); // Elimina caracteres no ASCII
     }
 }
 
@@ -85,7 +61,8 @@ function validarUTF8(input) {
 
   <h1 class="tit-form">Formulario de Plantas</h1>
   <form class="formulario" action="addplanta.php" method="POST" enctype="multipart/form-data">
-    <label class="nombre" for="nombre">Nombre:</label><br>   
+   
+    <label class="nombre" for="nombre">Nombre:</label><br>
     <input  oninput="validarASCII(this)" type="text" id="nombre" name="nombre" class="limitedcin" required><br><br>
 
     <label for="nombre_cientifico">Nombre Científico:</label><br>
@@ -145,10 +122,7 @@ function validarUTF8(input) {
     <label for="tipo_cuidado">Tipo de Cuidado:</label><br>
     <input oninput="validarASCII(this)" type="text" id="tipo_cuidado" name="tipo_cuidado" class="limitedcin" required><br><br>
 
-<div class="sugerencia-container">
-      <label for="informacion">Recomendaciones de cuidado: <div class="sugerencia-btn">?</div></label><br>
-      <div class="sugerencia">Evitar usar caracteres especiales</div>
-    </div>
+    <label for="informacion">Recomendaciones de cuidado:</label><br>
     <textarea oninput="validarASCII(this)" rows="4" cols="50" id="informacion" name="informacion" class="limited" required></textarea><br><br>
 
     <h2 class="subt-form">Plagas</h2>
@@ -156,10 +130,7 @@ function validarUTF8(input) {
     <label for="tipo_plaga">Tipo de Plaga:</label><br>
     <input oninput="validarASCII(this)" type="text" id="tipo_plaga" name="tipo_plaga" class="limitedcin" ><br><br>
 
-    <div class="sugerencia-container">
-	<label for="descripcion_plaga">Descripción de la Plaga: <div class="sugerencia-btn">?</div></label><br>
-      <div class="sugerencia">Evitar usar caracteres especiales</div>
-    </div>
+    <label for="descripcion_plaga">Descripción de la Plaga:</label><br>
     <textarea oninput="validarASCII(this)" rows="4" cols="50" id="descripcion_plaga" name="descripcion_plaga" class="limited"></textarea><br><br>
 
     <h2 class="subt-form">Información Climática</h2>
@@ -167,11 +138,7 @@ function validarUTF8(input) {
     <label for="ciudad_clima">Ciudad:</label><br>
     <input oninput="validarASCII(this)" type="text" id="ciudad_clima" name="ciudad_clima" class="limitedcin" required><br><br>
 
-   
-    <div class="sugerencia-container">
-      <label for="descripcion_clima">Descripción del Clima:<div class="sugerencia-btn">?</div></label><br>
-      <div class="sugerencia">Evitar usar caracteres especiales</div>
-    </div>
+    <label for="descripcion_clima">Descripción del Clima:</label><br>
     <textarea oninput="validarASCII(this)" rows="4" cols="50" id="descripcion_clima" name="descripcion_clima" class="limited" required></textarea><br><br>
 
     <label for="temperatura_promedio">Temperatura Promedio:</label><br>
@@ -180,11 +147,7 @@ function validarUTF8(input) {
     <label for="humedad_promedio">Humedad Promedio:</label><br>
     <input oninput="validarASCII(this)" type="number" id="humedad_promedio" name="humedad_promedio" class="limitedcin" required><br><br>
 
-   
-    <div class="sugerencia-container">
-     <label for="descripcion_suelo">Descripción del Suelo: <div class="sugerencia-btn">?</div> </label><br>
-      <div class="sugerencia">Evitar usar caracteres especiales</div>
-    </div>
+    <label for="descripcion_suelo">Descripción del Suelo:</label><br>
     <textarea oninput="validarASCII(this)" rows="4" cols="50" id="descripcion_suelo" name="descripcion_suelo" class="limited" required></textarea><br><br>
 
     <label for="latitud">Latitud:</label><br>
@@ -193,13 +156,10 @@ function validarUTF8(input) {
     <label for="longitud">Longitud:</label><br>
     <input oninput="validarASCII(this)" type="text" id="longitud" name="longitud" class="limitedcin" required><br><br>
 
-    <div class="sugerencia-container">
-	<label for="imagen">Subir Imagen:<div class="sugerencia-btn">?</div></label><br>
-      <div class="sugerencia">Sugerencia de tipo imagen: jpg</div>
-    </div>
-    <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
+    <label for="imagen">Subir Imagen:</label><br>
+    <input oninput="validarASCII(this)" type="file" id="imagen" name="imagen" accept="image/*"><br><br>
 
-    <button class="enviar" type="submit" value="Enviar" onclick="return confirmarinsertar();"  >Enviar</button>
+    <button class="enviar" type="submit" value="Enviar">Enviar</button>
     </form>
     
 </body>

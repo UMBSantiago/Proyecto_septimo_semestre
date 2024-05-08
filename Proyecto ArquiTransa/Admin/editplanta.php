@@ -21,6 +21,9 @@ if (isset($_POST['id_planta'])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    $conn->begin_transaction();
+    try {
+   
     echo "ID de la planta: " . $idPlanta;
     // Preparar los datos para su actualización en la base de datos
     $nombre = $_POST["nombre"];
@@ -138,8 +141,8 @@ if (!empty($_FILES["imagen"]["name"])) {
     // Mover la nueva imagen a una ubicación permanente
     $imagen_nombre = $_FILES["imagen"]["name"];
         $imagen_temporal = $_FILES["imagen"]["tmp_name"];
-        $directorio_destino = "/home/yiro/uploads/"; // Ruta relativa al directorio raíz del servidor
-        $ruta_imagen = $directorio_destino . $imagen_nombre;
+        $directorio_destino = "../Admin/imagen/"; // Ruta relativa al directorio raíz del servidor
+        $ruta_imagen = $directorio_destino.$imagen_nombre;
 
 
     // Mover la imagen al directorio de destino
@@ -158,12 +161,23 @@ if (!empty($_FILES["imagen"]["name"])) {
     } else {
         echo "Error al mover la nueva imagen al directorio de destino.";
     }
-}
-header("Location: Admin.html");
-exit;
+}   
+
+        $conn->commit();
+
+        echo json_encode(array('success' => 'Los datos de la planta y sus relacionados han sido editadosexitosamente.'));
+        } catch (Exception $e) {
+        // Revertir la transacción en caso de error
+        $conn->rollback();
+        echo json_encode(array('error' => 'Error al editar la planta: ' . $e->getMessage()));
+        }
 
     // Cerrar conexión
     $conn->close();
+
+    header("Location: Admin.html");
+    exit; 
 }
 ?>
+
 

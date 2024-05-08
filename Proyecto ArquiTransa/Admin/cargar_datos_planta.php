@@ -67,7 +67,6 @@ if (isset($_GET['id'])) {
         $sql_suelo = "SELECT * FROM SUELO WHERE ID_Suelo = $idPlanta";
         $result_suelo = $conn->query($sql_suelo);
         $suelo = $result_suelo->fetch_assoc();
-        // Cerrar la conexión
         $conn->close();
 
         // Crear un array asociativo con todos los datos
