@@ -25,8 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
 
     // Preparar los datos para su inserción en la base de datos
-    $nombre = $_POST["nombre"];
-    $nombre_cientifico = $_POST["nombre_cientifico"];
     $reino = $_POST["reino"];
     $division = $_POST["division"];
     $subdivision = $_POST["SubDivision"];
@@ -56,12 +54,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $latitud = $_POST["latitud"];
     $longitud = $_POST["longitud"];
     // Aquí puedes continuar con el resto de datos...
+    
+       // Preparar la consulta para insertar datos en la tabla PLANTAS
+       $sql_plantas = $conn->prepare("INSERT INTO PLANTAS (Nombrep, Nombre_cientifico) VALUES (?, ?)");
+       $sql_plantas->bind_param("ss", $nombre, $nombre_cientifico);
 
-// Insertar datos en la tabla PLANTAS
-    $sql_plantas = "INSERT INTO PLANTAS (Nombrep, Nombre_cientifico) VALUES ('$nombre', '$nombre_cientifico')";
-    $conn->query($sql_plantas);
-    // Obtener el ID de la planta insertada
-    $id_planta = $conn->insert_id;
+       // Asignar valores
+       $nombre = $_POST["nombre"];
+       $nombre_cientifico = $_POST["nombre_cientifico"];
+
+       // Ejecutar la consulta
+       $sql_plantas->execute();
+
+       // Obtener el ID de la planta insertada
+       $id_planta = $conn->insert_id;
 
         // Mover la imagen a una ubicación permanente
     $imagen_nombre = $_FILES["imagen"]["name"];
@@ -85,51 +91,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error al mover la imagen al directorio de destino.";
     }
 
-    // Insertar datos en la tabla TAXONOMIA
-    $sql_taxonomia = "INSERT INTO TAXONOMIA (nombre, reino, division, subdivision, clase, subclase, orden, familia, genero, especie, FKID_Planta)
-                      VALUES ('$nombre_cientifico', '$reino', '$division', '$subdivision', '$clase', '$subclase', '$orden', '$familia', '$genero', '$especie', '$id_planta')";
-    $conn->query($sql_taxonomia);
-
-    // Insertar datos en la tabla JARDIN_BOTANICO
-    $sql_jardin_botanico = "INSERT INTO JARDIN_BOTANICO (nombrep, nombrej, ubicacion, superficie, fecha_creacion)
-                            VALUES ('$nombre_cientifico', '$jardin_botanico', '$ubicacion', '$superficie_decimal', NOW())";
-    $conn->query($sql_jardin_botanico);
-
-    // Insertar datos en la tabla ZONA_RESERVA
-    $sql_zona_reserva = "INSERT INTO ZONA_RESERVA (nombrep, nombrez) VALUES ('$nombre_cientifico', '$zona_reserva')";
-    $conn->query($sql_zona_reserva);
-
-        // Insertar datos en la tabla PINES
-        $sql_pines = "INSERT INTO PINES (nombre, latitud, longitud) VALUES ('$nombre_cientifico', '$latitud', '$longitud')";
-        $conn->query($sql_pines);
+    $sql_taxonomia = $conn->prepare("INSERT INTO TAXONOMIA (nombre, reino, division, subdivision, clase, subclase, orden, familia, genero, especie, FKID_Planta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $sql_taxonomia->bind_param("ssssssssssi", $nombre_cientifico, $reino, $division, $subdivision, $clase, $subclase, $orden, $familia, $genero, $especie, $id_planta);
+    $sql_taxonomia->execute();
     
-        // Insertar datos en la tabla CLIMA
-        $sql_clima = "INSERT INTO CLIMA (nombrec, descripcionc, temperatura_promedio, humedad_promedio)
-                      VALUES ('$ciudad_clima', '$descripcion_clima', '$temperatura_promedio', '$humedad_promedio')";
-        $conn->query($sql_clima);
+    // Preparar la consulta para insertar datos en la tabla JARDIN_BOTANICO
+    $sql_jardin_botanico = $conn->prepare("INSERT INTO JARDIN_BOTANICO (nombrep, nombrej, ubicacion, superficie, fecha_creacion) VALUES (?, ?, ?, ?, NOW())");
+    $sql_jardin_botanico->bind_param("ssdi", $nombre_cientifico, $jardin_botanico, $ubicacion, $superficie_decimal);
+    $sql_jardin_botanico->execute();
     
-        // Insertar datos en la tabla SUELO
-        $sql_suelo = "INSERT INTO SUELO (Nombre, Descripcions) VALUES ('$nombre_cientifico', '$descripcion_suelo')";
-        $conn->query($sql_suelo);
+    // Preparar la consulta para insertar datos en la tabla ZONA_RESERVA
+    $sql_zona_reserva = $conn->prepare("INSERT INTO ZONA_RESERVA (nombrep, nombrez) VALUES (?, ?)");
+    $sql_zona_reserva->bind_param("ss", $nombre_cientifico, $zona_reserva);
+    $sql_zona_reserva->execute();
     
-        // Insertar datos en la tabla CUIDADOS
-        $sql_cuidados = "INSERT INTO CUIDADOS (Nombre, tipo_cuidado ,INFORMACION) VALUES ('$nombre_cientifico','$tipo_cuidado','$informacion')";
-        $conn->query($sql_cuidados);
+    // Preparar la consulta para insertar datos en la tabla PINES
+    $sql_pines = $conn->prepare("INSERT INTO PINES (nombre, latitud, longitud) VALUES (?, ?, ?)");
+    $sql_pines->bind_param("sdd", $nombre_cientifico, $latitud, $longitud);
+    $sql_pines->execute();
     
-        $sql_plagas = "INSERT INTO PLAGAS (Nombre, TIPO, Descripcion) VALUES ('$nombre_cientifico', '$tipo_plaga', '$descripcion_plaga')";
-        $conn->query($sql_plagas);
+    // Preparar la consulta para insertar datos en la tabla CLIMA
+    $sql_clima = $conn->prepare("INSERT INTO CLIMA (nombrec, descripcionc, temperatura_promedio, humedad_promedio) VALUES (?, ?, ?, ?)");
+    $sql_clima->bind_param("ssdd", $ciudad_clima, $descripcion_clima, $temperatura_promedio, $humedad_promedio);
+    $sql_clima->execute();
     
-        // Insertar datos en la tabla FLORACION
-        $sql_floracion = "INSERT INTO FLORACION (nombre, inicio_flora, fin_flora) VALUES ('$nombre_cientifico', '$inicio_flora', '$fin_flora')";
-        $conn->query($sql_floracion);
+    // Preparar la consulta para insertar datos en la tabla SUELO
+    $sql_suelo = $conn->prepare("INSERT INTO SUELO (Nombre, Descripcions) VALUES (?, ?)");
+    $sql_suelo->bind_param("ss", $nombre_cientifico, $descripcion_suelo);
+    $sql_suelo->execute();
     
-        // Insertar datos en la tabla REGION
-        $sql_region = "INSERT INTO REGION (Nombre, Ciudad) VALUES ('$nombre_cientifico', '$ciudad')";
-        $conn->query($sql_region);
-
-        // Insertar datos en la tabla LOCALIZACION
-        $sql_localizacion = "INSERT INTO LOCALIZACION (Nombre, Direccion ,Ciudad) VALUES ('$nombre_cientifico','$direccion' ,'$ciudad')";
-        $conn->query($sql_localizacion);
+    // Preparar la consulta para insertar datos en la tabla CUIDADOS
+    $sql_cuidados = $conn->prepare("INSERT INTO CUIDADOS (Nombre, tipo_cuidado, INFORMACION) VALUES (?, ?, ?)");
+    $sql_cuidados->bind_param("sss", $nombre_cientifico, $tipo_cuidado, $informacion);
+    $sql_cuidados->execute();
+    
+    // Preparar la consulta para insertar datos en la tabla PLAGAS
+    $sql_plagas = $conn->prepare("INSERT INTO PLAGAS (Nombre, TIPO, Descripcion) VALUES (?, ?, ?)");
+    $sql_plagas->bind_param("sss", $nombre_cientifico, $tipo_plaga, $descripcion_plaga);
+    $sql_plagas->execute();
+    
+    // Preparar la consulta para insertar datos en la tabla FLORACION
+    $sql_floracion = $conn->prepare("INSERT INTO FLORACION (nombre, inicio_flora, fin_flora) VALUES (?, ?, ?)");
+    $sql_floracion->bind_param("sss", $nombre_cientifico, $inicio_flora, $fin_flora);
+    $sql_floracion->execute();
+    
+    // Preparar la consulta para insertar datos en la tabla REGION
+    $sql_region = $conn->prepare("INSERT INTO REGION (Nombre, Ciudad) VALUES (?, ?)");
+    $sql_region->bind_param("ss", $nombre_cientifico, $ciudad);
+    $sql_region->execute();
+    
+    // Preparar la consulta para insertar datos en la tabla LOCALIZACION
+    $sql_localizacion = $conn->prepare("INSERT INTO LOCALIZACION (Nombre, Direccion, Ciudad) VALUES (?, ?, ?)");
+    $sql_localizacion->bind_param("sss", $nombre_cientifico, $direccion, $ciudad);
+    $sql_localizacion->execute();
     
         // Mover la imagen a una ubicación permanente
         $imagen_nombre = $_FILES["imagen"]["name"];
@@ -154,4 +168,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       exit;
     }
     ?>
+
 

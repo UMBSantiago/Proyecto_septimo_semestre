@@ -146,8 +146,10 @@ function validarUTF8(input) {
     var regex = /^[ -~áéíóúÁÉÍÓÚüÜ,.ñÑ]*$/; // Esta expresión regular acepta caracteres ASCII imprimibles, letras con tilde, coma, punto, la letra ñ y caracteres UTF-8 adicionales
     if (!regex.test(input.value)) {
         input.value = input.value.replace(/[^\x20-\x7EáéíóúÁÉÍÓÚüÜ,.ñÑ]/g, ''); // Elimina caracteres no permitidos
+        input.value = input.value.replace(/[\'\"]+/g, ''); // Elimina comillas simples y dobles
     }
 }
+
 
 
   document.addEventListener('DOMContentLoaded', function() {
