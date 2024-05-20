@@ -11,7 +11,7 @@
 
 <body class="Adm">
     <header class="barra-sup"> 
-            <a href="investigador.html" id="titulo" class="titulo">EcoMapeo-inve</a>
+            <a href="investigador.html" id="Titulo" class="Titulo">EcoMapeo-inve</a>
             <nav class="buscar">
                 <input type="text" class="busqueda" placeholder="Buscar..." >
             </nav>
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-            function cerrarSesion() {
-        eliminarCookie('email');
+    function cerrarSesion() {
+        eliminarCookie('investigador_email');
         // Redirige al usuario a la página de inicio de sesión (login.html)
         window.location.href = "../LoginAdm/login.html";
         window.history.replaceState({}, document.title, "../LoginAdm/login.html");
@@ -66,19 +66,109 @@ document.addEventListener('DOMContentLoaded', function() {
         document.cookie = nombre + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
 
+    window.onload = function () {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("plantasContainer").innerHTML = this.responseText;
+
+                        // Obtener todos los elementos de la lista de plantas
+                        var plantas = document.querySelectorAll('.planta');
+
+                        // Agregar evento de clic a cada elemento de la lista
+                        plantas.forEach(function (planta) {
+                            planta.addEventListener('click', function () {
+                                // Deseleccionar todas las plantas
+                                plantas.forEach(function (p) {
+                                    p.classList.remove('seleccionada');
+                                });
+
+                                // Seleccionar la planta clicada
+                                planta.classList.add('seleccionada');
+
+                                // Mostrar el ID de la planta seleccionada en la consola
+                                var idPlanta = planta.getAttribute('id');
+                                console.log('ID de la planta seleccionada:', idPlanta);
+                            });
+                        });
+
+
+                        // Habilitar el botón de edición de planta
+                        var editarPlanta = document.getElementById("editarPlanta");
+                        editarPlanta.addEventListener('click', function () {
+                            var plantaSeleccionada = document.querySelector('.planta.seleccionada');
+                            if (plantaSeleccionada) {
+                                // Obtener el ID de la planta seleccionada
+                                var idPlanta = plantaSeleccionada.getAttribute('id');
+
+                                // Construir la URL de la página de edición con el ID de la planta como parámetro
+                                var url = "editinves.html?id=" + idPlanta;
+
+                                // Redirigir a la página de edición
+                                window.location.href = url;
+                            } else {
+                                alert("Seleccione una planta para editar investigacion.");
+                            }
+                        });
+
+                        var elimiPlanta = document.getElementById("elimiPlanta");
+                        elimiPlanta.addEventListener('click', function () {
+                            var plantaSeleccionada = document.querySelector('.planta.seleccionada');
+                            if (plantaSeleccionada) {
+                                // Obtener el ID de la planta seleccionada
+                                var idPlanta = plantaSeleccionada.getAttribute('id');
+
+                                // Construir la URL de la página de edición con el ID de la planta como parámetro
+                                var url = "eliminv.html?id=" + idPlanta;
+
+                                // Redirigir a la página de edición
+                                window.location.href = url;
+                            } else {
+                                alert("Seleccione una planta para editar investigacion.");
+                            }
+                        });
+
+                        var addPlanta = document.getElementById("addPlanta");
+                        addPlanta.addEventListener('click', function () {
+                            var plantaSeleccionada = document.querySelector('.planta.seleccionada');
+                            if (plantaSeleccionada) {
+                                // Obtener el ID de la planta seleccionada
+                                var idPlanta = plantaSeleccionada.getAttribute('id');
+
+                                // Construir la URL de la página de edición con el ID de la planta como parámetro
+                                var url = "addinves.html?id=" + idPlanta;
+
+                                // Redirigir a la página de edición
+                                window.location.href = url;
+                            } else {
+                                alert("Seleccione una planta para insertar investigacion.");
+                            }
+                        });
+                    }
+                };
+                xhttp.open("GET", "obtener_plantas.php", true);
+                xhttp.send();
+            };
+
+
+
 
         </script>
     </main>
 
     <footer class="barra-inf">
-        <button type="submit" class="Addplanta"><a href="#"><i class='bx bxs-file-plus'></i></a></button>
+        <button type="submit" class="Addplanta" id="addPlanta"><a href="#" class="disabled"><i 
+            class='bx bxs-file-plus'></i></a></button>
         <button type="submit" class="editar" id="editarPlanta"><a href="#" class="disabled"><i
                     class='bx bxs-pencil'></i></a></button>
-        <button type="submit" class="eliminar" id="eliminarPlanta"><i class='bx bx-trash'></i></button>
+        <button type="submit" class="eliminar" id="elimiPlanta"><a href="#" class="disabled"><i
+             class='bx bx-trash'></i></a></button>
 	<button type="submit" class="mapita"><a href="../Mapa"><i class='bx bx-map-alt'></i></a></button>
 
     </footer>
 </body>
 
 </html>
+
+
 

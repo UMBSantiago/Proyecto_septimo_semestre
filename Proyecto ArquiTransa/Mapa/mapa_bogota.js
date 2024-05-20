@@ -24,7 +24,7 @@ function addMarker(pin) {
     </div>
     <div class="custom-popup">
         <h3 class="nom">${pin.nombre}</h3>
-        <h3 class="ubi">Ubicación: ${pin.ubicacion}</h3>
+        <h3 class="ubi">Ubicación: ${pin.Direccion}</h3>
     </div>
     
 `, { autoPan: true , closeOnClick: false}).on('click', function() {
@@ -82,11 +82,11 @@ function cerrarVentana() {
 
 // Función para cargar la información de la taxonomía
 function cargarInformacionTaxonomia(pin) {
-    var contenidoTaxonomia = document.getElementById("contenidoTaxonomia")
+    var contenidoTaxonomia = document.getElementById("contenidoTaxonomia");
     contenidoTaxonomia.innerHTML = ""; // Limpiar el contenido anterior
 
     var xhrTaxonomia = new XMLHttpRequest();
-    xhrTaxonomia.open('GET', 'obtener_planta.php?id=' + (pin.ID_Pin), true);
+    xhrTaxonomia.open('GET', 'obtener_planta.php?id=' + encodeURIComponent(pin.ID_Pin), true);
     console.log(pin);
     console.log(pin.ID_Pin);
     xhrTaxonomia.onload = function () {
@@ -97,9 +97,7 @@ function cargarInformacionTaxonomia(pin) {
             var lista = document.createElement("ul");
             propiedades.forEach(function (propiedad) {
                 var li = document.createElement("li");
-                // Convertir la primera letra de la propiedad a minúsculas
                 var propiedadMin = propiedad.charAt(0).toLowerCase() + propiedad.slice(1);
-                // Verificar si la propiedad existe en plantaData
                 if (plantaData[propiedadMin] !== undefined) {
                     li.textContent = `${propiedad}: ${plantaData[propiedadMin]}`;
                 } else {
@@ -107,6 +105,7 @@ function cargarInformacionTaxonomia(pin) {
                 }
                 lista.appendChild(li);
             });
+
             // Crear elemento de imagen
             var imagen = document.createElement("img");
             imagen.src = plantaData.direccion; // Asignar la dirección de la imagen
@@ -114,9 +113,94 @@ function cargarInformacionTaxonomia(pin) {
             contenidoTaxonomia.appendChild(imagen); // Agregar la imagen al contenido de la taxonomía
             
             contenidoTaxonomia.appendChild(lista); // Agregar la lista al contenido de la taxonomía
+
+            // Mostrar información de investigación
+            var propiedadesClima = [
+                { propiedad: "nombrec", nombreCasilla: "Ciudad" },
+                { propiedad: "descripcionc", nombreCasilla: "Descripción" },
+                { propiedad: "temperatura_promedio", nombreCasilla: "Temperatura Promedio" },
+                { propiedad: "humedad_promedio", nombreCasilla: "Humedad Promedio" }
+            ];
             
+            var listaClima = document.createElement("ul");
             
+            propiedadesClima.forEach(function (propiedadObj) {
+                var li = document.createElement("li");
+                var propiedad = propiedadObj.propiedad;
+                var nombreCasilla = propiedadObj.nombreCasilla;
             
+                if (plantaData[propiedad] !== undefined) {
+                    li.textContent = `${nombreCasilla}: ${plantaData[propiedad]}`;
+                } else {
+                    li.textContent = `${nombreCasilla}: No disponible`;
+                }
+            
+                listaClima.appendChild(li);
+            });
+            
+            contenidoTaxonomia.appendChild(listaClima);
+
+
+            var propiedadesregion = [
+                { propiedad: "Nombre", nombreCasilla: "Planta" },
+                { propiedad: "Ciudad", nombreCasilla: "Region" },
+                { propiedad: "Descripcions", nombreCasilla: "Descripción del suelo" }
+            ];
+            
+            var listaregion = document.createElement("ul");
+            
+            propiedadesregion.forEach(function (propiedadObj) {
+                var li = document.createElement("li");
+                var propiedad = propiedadObj.propiedad;
+                var nombreCasilla = propiedadObj.nombreCasilla;
+            
+                if (plantaData[propiedad] !== undefined) {
+                    li.textContent = `${nombreCasilla}: ${plantaData[propiedad]}`;
+                } else {
+                    li.textContent = `${nombreCasilla}: No disponible`;
+                }
+            
+                listaregion.appendChild(li);
+            });
+            
+            contenidoTaxonomia.appendChild(listaregion);
+
+
+            var propiedadescuidado = [
+                { propiedad: "tipo_cuidado", nombreCasilla: "Tipo de cuidado" },
+                { propiedad: "INFORMACION", nombreCasilla: "Informacion de cuidado" },
+                { propiedad: "TIPO", nombreCasilla: "Tipo de Plaga" },
+                { propiedad: "Descripcion", nombreCasilla: "Informacion de plagas" },
+                { propiedad: "Ciudad", nombreCasilla: "Tipo de Plaga" },
+                { propiedad: "Direccion", nombreCasilla: "Direccion" },
+                { propiedad: "nombrej", nombreCasilla: "Jardin Botanico" },
+                { propiedad: "superficie", nombreCasilla: "Superficie" },
+                //{ propiedad: "ubicacion", nombreCasilla: "Ubicacion del Jardin" },
+                { propiedad: "nombrez", nombreCasilla: "Zona de Reserva" },
+                { propiedad: "inicio_flora", nombreCasilla: "Inicio de Flora" },
+                { propiedad: "fin_flora", nombreCasilla: "Finalizacion de Flora" }
+            ];
+            
+            var listacuidado = document.createElement("ul");
+            
+            propiedadescuidado.forEach(function (propiedadObj) {
+                var li = document.createElement("li");
+                var propiedad = propiedadObj.propiedad;
+                var nombreCasilla = propiedadObj.nombreCasilla;
+            
+                if (plantaData[propiedad] !== undefined) {
+                    li.textContent = `${nombreCasilla}: ${plantaData[propiedad]}`;
+                } else {
+                    li.textContent = `${nombreCasilla}: No disponible`;
+                }
+            
+                listacuidado.appendChild(li);
+            });
+            
+            contenidoTaxonomia.appendChild(listacuidado);
+
+            
+
             // Mostrar el cuadro después de cargar los datos
             var cuadro = document.getElementById("cuadro");
             cuadro.style.left = "0";
@@ -127,6 +211,9 @@ function cargarInformacionTaxonomia(pin) {
     };
     xhrTaxonomia.send();
 }
+
+
+
 
 
 

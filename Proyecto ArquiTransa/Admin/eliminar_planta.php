@@ -2,7 +2,7 @@
 // Verificar si se ha enviado un ID de planta por GET
 if (isset($_GET['id'])) {
     // Obtener el ID de la planta desde la URL
-    $idPlanta = $_GET['id'];
+    $idPlanta = intval($_GET['id']); // Convertir a entero para mayor seguridad
 
     // Crear conexión a la base de datos
     $servername = "localhost";
@@ -17,53 +17,66 @@ if (isset($_GET['id'])) {
         die(); // Terminar el script
     }
 
-
     // Iniciar transacción
     $conn->begin_transaction();
 
     try {
+        $messages = array();
 
-// Definir las consultas DELETE para cada tabla relacionada
-    
-    $sql_delete_taxonomia = "DELETE FROM TAXONOMIA WHERE FKID_Planta = $idPlanta";
-    $conn->query($sql_delete_taxonomia);
-    $sql_delete_jardin_botanico = "DELETE FROM JARDIN_BOTANICO WHERE ID_JBot = $idPlanta";
-    $conn->query($sql_delete_jardin_botanico);
-    $sql_delete_zona_reserva = "DELETE FROM ZONA_RESERVA WHERE ID_ZRes = $idPlanta";
-    $conn->query($sql_delete_zona_reserva);
-    $sql_delete_plagas = "DELETE FROM PLAGAS WHERE ID_PLAG = $idPlanta";
-    $conn->query($sql_delete_plagas);
-    $sql_delete_clima = "DELETE FROM CLIMA WHERE ID_Clim = $idPlanta";
-    $conn->query($sql_delete_clima);
-    $sql_delete_pin = "DELETE FROM PINES WHERE ID_Pin = $idPlanta";
-    $conn->query($sql_delete_pin);
-    $sql_delete_flora = "DELETE FROM FLORACION WHERE ID_Flora = $idPlanta";
-    $conn->query($sql_delete_flora);
-    $sql_delete_cuidados = "DELETE FROM CUIDADOS WHERE ID_cuida = $idPlanta";
-    $conn->query($sql_delete_cuidados);
-    $sql_delete_localizacion = "DELETE FROM LOCALIZACION WHERE ID_LOCALI = $idPlanta";
-    $conn->query($sql_delete_localizacion);
-    $sql_delete_suelo = "DELETE FROM SUELO WHERE ID_Suelo = $idPlanta";
-    $conn->query($sql_delete_suelo);
-    $sql_delete_imagen = "DELETE FROM IMAGEN WHERE FKID_Planta = $idPlanta";
-    $conn->query($sql_delete_imagen);
+        // Verificar si existe información en la tabla INVESTIGACION
+        $result = $conn->query("SELECT COUNT(*) AS count FROM INVESTIGACION WHERE FKID_Planta = $idPlanta");
+        $row = $result->fetch_assoc();
+        if ($row['count'] > 0) {
+            // Si hay información en INVESTIGACION, proceder a eliminarla
+            $query = "DELETE FROM INVESTIGACION WHERE FKID_Planta = $idPlanta";
+            if ($conn->query($query) === TRUE) {
+                $messages[] = "Datos eliminados de la tabla Investigación correctamente.";
+            } else {
+                throw new Exception("Error al eliminar datos de la tabla Investigación: " . $conn->error);
+            }
+        } else {
+            $messages[] = "No se encontró información en la tabla Investigación.";
+        }
 
-    $sql_delete_planta = "DELETE FROM PLANTAS WHERE ID_Planta = $idPlanta";
-    $conn->query($sql_delete_planta);
+        // Definir las consultas DELETE para cada tabla relacionada, excluyendo INVESTIGACION
+        $queries = array(
+            "DELETE FROM TAXONOMIA WHERE FKID_Planta = $idPlanta" => "Taxonomía",
+            "DELETE FROM JARDIN_BOTANICO WHERE ID_JBot = $idPlanta" => "Jardín Botánico",
+            "DELETE FROM PLAGAS WHERE ID_PLAG = $idPlanta" => "Plagas",
+            "DELETE FROM CLIMA WHERE ID_Clim = $idPlanta" => "Clima",
+            "DELETE FROM REGION WHERE ID_Reg = $idPlanta" => "Region",
+            "DELETE FROM PINES WHERE ID_Pin = $idPlanta" => "Pines",
+            "DELETE FROM FLORACION WHERE ID_Flora = $idPlanta" => "Floración",
+            "DELETE FROM CUIDADOS WHERE ID_cuida = $idPlanta" => "Cuidados",
+            "DELETE FROM LOCALIZACION WHERE ID_LOCALI = $idPlanta" => "Localización",
+            "DELETE FROM SUELO WHERE ID_Suelo = $idPlanta" => "Suelo",
+            "DELETE FROM IMAGEN WHERE FKID_Planta = $idPlanta" => "Imagen",
+            "DELETE FROM PLANTAS WHERE ID_Planta = $idPlanta" => "Plantas"
+        );
 
-// Confirmar la transacción
-$conn->commit();
+        // Ejecutar cada consulta y almacenar mensajes
+        foreach ($queries as $query => $tableName) {
+            if ($conn->query($query) === TRUE) {
+                $messages[] = "Datos eliminados de la tabla $tableName correctamente.";
+            } else {
+                throw new Exception("Error al eliminar datos de la tabla $tableName: " . $conn->error);
+            }
+        }
 
-echo json_encode(array('success' => 'Los datos de la planta y sus relacionados han sido eliminados exitosamente.'));
-} catch (Exception $e) {
-// Revertir la transacción en caso de error
-$conn->rollback();
-echo json_encode(array('error' => 'Error al eliminar la planta: ' . $e->getMessage()));
-}
+        // Confirmar la transacción
+        $conn->commit();
 
-// Cerrar la conexión
-$conn->close();
+        echo json_encode(array('success' => 'Los datos de la planta y sus relacionados han sido eliminados exitosamente.', 'messages' => $messages));
+    } catch (Exception $e) {
+        // Revertir la transacción en caso de error
+        $conn->rollback();
+        echo json_encode(array('error' => 'Error al eliminar la planta: ' . $e->getMessage()));
+    }
+
+    // Cerrar la conexión
+    $conn->close();
 } else {
-echo json_encode(array('error' => 'No se ha proporcionado un ID de planta.'));
+    echo json_encode(array('error' => 'No se ha proporcionado un ID de planta.'));
 }
 ?>
+

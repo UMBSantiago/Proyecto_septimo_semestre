@@ -11,12 +11,15 @@
 <body class="editp">
 
   <header class="barra-sup"> 
-    <a href="Admin.html" id="titulo" class="titulo">EcoMapeoBotánico</a>
+    <a href="Admin.html" id="Titulo" class="Titulo">EcoMapeoBotánico</a>
     <button type="button" class="back"><a class="regre" href="Admin.html"><i class='bx bx-arrow-back'></i></a></button>
     <button type="button" class="cerrar-sesion" onclick="cerrarSesion()"><i class='bx bx-log-out'></i></button>
 </header>
 
   <h1 class="tit-form">Formulario de Plantas</h1>
+
+  <button class="editinv" id="editarInvestigacionesBtn">Editar investigaciones</button>
+
   <form class="formulario" action="editplanta.php" method="POST" enctype="multipart/form-data">
     <label for="nombre">Nombre:</label><br>
     <input type="text" id="nombre" name="nombre" class="limitedcin" required><br><br>
@@ -114,15 +117,59 @@
     <label for="imagen">Subir Imagen:</label><br>
     <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
 
+    
+
     <input type="hidden" name="id_planta" id="id_planta">
     <button class="enviar" type="submit" value="Enviar" onclick="return confirmarEdicion();">Enviar
 
 
   </form>
 
-  </form>
+
+<script src="verificar_sesion.js"></script>
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    var editarInvestigacionesBtn = document.getElementById('editarInvestigacionesBtn');
+
+    editarInvestigacionesBtn.addEventListener('click', function () {
+        // Obtener el ID de la planta desde los parámetros de la URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var idPlanta = urlParams.get('id');
+
+        // Verificar que el ID de la planta no esté vacío o sea inválido antes de proceder
+        if (idPlanta) {
+            console.log('ID de planta obtenido:', idPlanta); // Para depuración
+
+            // Construir la URL de la página de edición con el ID de la planta como parámetro
+            var url = "editinvesadm.html?id=" + idPlanta;
+
+            // Redirigir a la página de edición de investigaciones
+            window.location.href = url;
+        } else {
+            alert("No se encontró ID de planta válido en la URL.");
+        }
+    });
+});
+
+
+
+
+
+    // Función para eliminar la cookie y cerrar sesión
+    function cerrarSesion() {
+        eliminarCookie('email');
+        // Redirige al usuario a la página de inicio de sesión (login.html)
+        window.location.href = "../LoginAdm/login.html";
+    }
+
+    // Función para eliminar la cookie
+    function eliminarCookie(nombre) {
+        // Establecer el tiempo de expiración de la cookie en el pasado para eliminarla
+        document.cookie = nombre + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
    function confirmarEdicion() {
     // Mostrar un cuadro de diálogo de confirmación al usuario
     var confirmacion = confirm("¿Estás seguro de editar esta planta?");
@@ -261,4 +308,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 

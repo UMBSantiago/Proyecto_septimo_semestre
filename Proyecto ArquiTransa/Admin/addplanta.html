@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +7,17 @@
 <link rel="stylesheet" href="../static/styles.css" />
 <title>Formulario de Plantas</title>
 
+<script src="verificar_sesion.js"></script>
+
 <script>
 
+function cerrarSesion() {
+                // Aquí puedes agregar el código para cerrar la sesión, como redirigir a la página de inicio de sesión
+                window.location.href = "../LoginAdm/login.html"; // Cambia "cerrar_sesion.php" por la URL de tu script de cierre de sesión
+
+                // Reemplazar la entrada actual en el historial con la página de inicio de sesión
+                window.history.replaceState({}, document.title, "../LoginAdm/login.html");
+            }
 
 
   function confirmarinsertar() {
@@ -82,7 +90,7 @@ function validarASCII(input) {
 <body class="addp">
 
   <header class="barra-sup"> 
-    <a href="Admin.html" id="titulo" class="titulo">EcoMapeoBotánico</a>
+    <a href="Admin.html" id="Titulo" class="Titulo">EcoMapeoBotánico</a>
     <button type="button" class="back"><a class="regre" href="Admin.html"><i class='bx bx-arrow-back'></i></a></button>
     <button type="button" class="cerrar-sesion" onclick="cerrarSesion()"><i class='bx bx-log-out'></i></button>
 </header>
@@ -192,10 +200,10 @@ function validarASCII(input) {
     <textarea oninput="validarASCII(this)" rows="4" cols="50" id="descripcion_suelo" name="descripcion_suelo" class="limited" required></textarea><br><br>
 
     <label for="latitud">Latitud:</label><br>
-    <input oninput="validarASCII(this)" type="text" id="latitud" name="latitud" class="limitedcin" required><br><br>
+    <input oninput="validarASCII(this)" type="number" id="latitud" name="latitud" class="limitedcin" required><br><br>
 
     <label for="longitud">Longitud:</label><br>
-    <input oninput="validarASCII(this)" type="text" id="longitud" name="longitud" class="limitedcin" required><br><br>
+    <input oninput="validarASCII(this)" type="number" id="longitud" name="longitud" class="limitedcin" required><br><br>
 
     <div class="sugerencia-container">
 	<label for="imagen">Subir Imagen:<div class="sugerencia-btn">?</div></label><br>
@@ -209,4 +217,6 @@ function validarASCII(input) {
 </body>
 
 </html>
+
+
 

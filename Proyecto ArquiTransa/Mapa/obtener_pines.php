@@ -14,10 +14,10 @@ if ($conn->connect_error) {
 }
 
 // Consulta SQL para obtener los pines
-$sql = "SELECT PINES.ID_Pin, PINES.nombre, PINES.latitud, PINES.longitud, IMAGEN.direccion, JARDIN_BOTANICO.ubicacion 
+$sql = "SELECT PINES.ID_Pin, PINES.nombre, PINES.latitud, PINES.longitud, IMAGEN.direccion, LOCALIZACION.Direccion 
         FROM PINES 
         LEFT JOIN IMAGEN ON PINES.ID_Pin = IMAGEN.FKID_Planta
-        LEFT JOIN JARDIN_BOTANICO ON PINES.ID_Pin = JARDIN_BOTANICO.ID_JBot";
+        LEFT JOIN LOCALIZACION ON PINES.ID_Pin = LOCALIZACION.ID_LOCALI";
 
 
 $result = $conn->query($sql);
@@ -37,3 +37,4 @@ echo json_encode($pines);
 // Cerrar conexión
 $conn->close();
 ?>
+

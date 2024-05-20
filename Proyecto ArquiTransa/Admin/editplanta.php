@@ -126,7 +126,7 @@ if (isset($_POST['id_planta'])) {
 
     // Actualizar datos en la tabla REGION
     $sql_region = "UPDATE REGION 
-                   SET Ciudad = '$ciudad' 
+                   SET Nombre = '$nombre',Ciudad = '$ciudad' 
                    WHERE ID_Reg = $idPlanta";
     $conn->query($sql_region);
 
@@ -179,5 +179,6 @@ if (!empty($_FILES["imagen"]["name"])) {
     exit; 
 }
 ?>
+
 
 

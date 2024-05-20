@@ -23,18 +23,20 @@ function verificarCookie(nombre) {
     return false;
 }
 
-// Verificar si la cookie 'email' está activa
-var emailCookieActiva = verificarCookie('email');
+// Verificar si la cookie 'investigador_email' está activa
+var investigadorCookieActiva = verificarCookie('investigador_email');
 
-if (emailCookieActiva) {
-    console.log('La cookie "email" está activa.');
-window.history.pushState(null, null, window.location.href);
-window.onpopstate = function(event) {
-    window.history.go(1); // Redirigir al usuario nuevamente al login
-};
+if (investigadorCookieActiva) {
+    console.log('La cookie "investigador_email" está activa.');
+    // Mantener al usuario en la página actual al intentar retroceder
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function(event) {
+        window.history.go(1); // Redirigir al usuario nuevamente al login
+    };
 } else {
-    console.log('La cookie "email" no está activa.');	
-window.location.href = '../LoginAdm/login.html';
-window.history.replaceState({}, document.title, "../LoginAdm/login.html");
+    console.log('La cookie "investigador_email" no está activa.');	
+    // Redirigir al usuario a la página de inicio de sesión del investigador
+    window.location.href = '../LoginAdm/login.html';
+    window.history.replaceState({}, document.title, "../LoginInv/login.html");
 }
 

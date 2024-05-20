@@ -22,6 +22,7 @@
 }
 
 
+
 .barra-sup {
     top: 0;
     left: 0;
@@ -66,7 +67,7 @@
     width: 40%; /* Ancho del cuadro */
     max-width: 300px; /* Ancho máximo del cuadro */
     height: 100%; /* Altura automática según el contenido */
-    background-color: var(--color-primary);
+    background-color: var(--color-cuadro);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
     z-index: 999; /* Asegura que el cuadro esté sobre otros elementos */
     padding: 20px;
@@ -84,19 +85,13 @@
 }
 
 #cuadro ul li {
-    margin-bottom: 15px; /* Margen inferior entre elementos de la lista */
-    padding: 12px; /* Espaciado interno de cada elemento */
-    border-radius: 8px; /* Esquinas redondeadas */
-    background-color: var(--color-busc); /* Color de fondo */
+    margin-bottom: 10px; /* Margen inferior de cada elemento de la lista */
+    padding: 8px; /* Añadir relleno alrededor de cada elemento */
+    border-radius: 5px; /* Añadir esquinas redondeadas */
+    background-color: var(--color-lista); /* Color de fondo */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    font-size: 16px; /* Tamaño de fuente */
-    color: var(--color-terci); /* Color del texto */
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Transiciones suaves */
-}
-
-#cuadro ul li:hover {
-    transform: translateY(-2px); /* Efecto de levantamiento al pasar el ratón */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+    font-size: 16px; /* Tamaño de fuente del texto */
+    color: #333; /* Color del texto */
 }
 
 #contenidoTaxonomia img {
